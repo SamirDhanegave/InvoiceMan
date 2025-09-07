@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Generator - InvoiceMan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Create free invoices in seconds. No signup required. Designed for freelancers.">
+  <meta name="keywords" content="invoice generator, freelancer invoice, free invoice template, free invoice generator online">
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family:'Poppins', sans-serif; line-height:1.6; color:#111827; background:#f9fafb;}
+    header {display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:white; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+    header .logo {font-weight:700; font-size:1.2rem; color:#2563eb;}
+    nav ul {display:flex; list-style:none; gap:1.5rem;}
+    nav a {text-decoration:none; color:#111827; font-weight:500; transition:0.3s;}
+    nav a:hover {color:#2563eb;}
+    .btn-primary {background:#2563eb; color:white; padding:0.6rem 1.2rem; border-radius:999px; text-decoration:none; font-weight:600; transition:0.3s;}
+    .btn-primary:hover {background:#1e40af;}
+
+    .hero {display:grid; grid-template-columns:1fr 1fr; align-items:center; padding:4rem 2rem; gap:2rem;}
+    .hero h1 {font-size:2.5rem; font-weight:700; margin-bottom:1rem;}
+    .hero p {font-size:1.1rem; margin-bottom:2rem; color:#374151;}
+    .hero img {width:50%; border-radius:12px; box-shadow:0 6px 16px rgba(0,0,0,0.1);}
+
+    section {padding:4rem 2rem; text-align:center;}
+    section h2 {font-size:2rem; margin-bottom:1rem; font-weight:700;}
+    .steps, .features, .pricing {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; margin-top:2rem;}
+    .card {background:white; padding:2rem; border-radius:16px; box-shadow:0 6px 16px rgba(0,0,0,0.05); transition:transform 0.3s;}
+    .card:hover {transform:translateY(-5px);}
+    .pricing .card {border:2px solid transparent;}
+    .pricing .card:hover {border:2px solid #2563eb;}
+
+    .faq-item {text-align:left; background:white; padding:1rem 1.5rem; border-radius:12px; margin:1rem 0; box-shadow:0 2px 8px rgba(0,0,0,0.05); cursor:pointer;}
+    .faq-item h4 {display:flex; justify-content:space-between; align-items:center; font-size:1rem; font-weight:600;}
+    .faq-item p {max-height:0; overflow:hidden; transition:max-height 0.4s ease; color:#374151;}
+    .faq-item.active p {max-height:200px; margin-top:0.5rem;}
+
+    footer {padding:2rem; background:#111827; color:white; text-align:center;}
+    footer a {color:#93c5fd; text-decoration:none; margin:0 0.5rem;}
+
+    /* Animations */
+    [data-animate] {opacity:0; transform:translateY(20px); transition:all 0.8s ease-out;}
+    [data-animate].active {opacity:1; transform:translateY(0);}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">InvoiceMan</div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="blog.html">Blogs</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <a href="invoiceGen.html" class="btn-primary">Generate Invoice</a>
+  </header>
+
+  <section class="hero" id="home">
+    <div data-animate>
+      <h1>Create Invoices in Seconds Free & Simple</h1>
+      <p>No signup. No hassle. Just fill and download.</p>
+      <a href="invoiceGen.html" class="btn-primary">Start Now</a>
+    </div>
+    <div data-animate>
+      <img src="https://static.vecteezy.com/system/resources/previews/068/914/268/non_2x/3d-invoice-document-with-blue-accents-on-transparent-background-free-png.png" alt="Invoice Mockup">
+    </div>
+  </section>
+
+  <section id="how">
+    <h2 data-animate>How It Works</h2>
+    <div class="steps">
+      <div class="card" data-animate>
+        <h3>Step 1</h3>
+        <p>Fill your details.</p>
+      </div>
+      <div class="card" data-animate>
+        <h3>Step 2</h3>
+        <p>Preview invoice.</p>
+      </div>
+      <div class="card" data-animate>
+        <h3>Step 3</h3>
+        <p>Download as PDF.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <h2 data-animate>Features</h2>
+    <div class="features">
+      <div class="card" data-animate>Instant PDF Export</div>
+      <div class="card" data-animate>No Account Needed</div>
+    </div>
+  </section>
+
+
+
+  <section id="faq">
+    <h2 data-animate>FAQ</h2>
+    <div class="faq-item" data-animate>
+      <h4>Do I need to sign up? <span>+</span></h4>
+      <p>No.</p>
+    </div>
+    <div class="faq-item" data-animate>
+      <h4>Is my data saved? <span>+</span></h4>
+      <p>No, all local.</p>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <p><a href="policy.html">Privacy Policy</a> | <a href="blog.html">Blogs | <a href="#features">Features</a></a></p>
+    <p>Made with ❤️ by InvoiceMan</p>
+  </footer>
+
+<script>
+// FAQ Toggle
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+  item.addEventListener('click', () => {
+    item.classList.toggle('active');
+  });
+});
+
+// Scroll animations
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, {threshold:0.2});
+
+document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

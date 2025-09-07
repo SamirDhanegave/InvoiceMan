@@ -1,0 +1,155 @@
+<!-- Privacy Policy Section (copy & paste into your site) -->
+<section id="privacy" class="privacy-section">
+  <div class="wrap">
+    <header class="privacy-header">
+      <h1>Privacy Policy</h1>
+      <p class="lead">Last updated: <strong id="pp-date">September 7, 2025</strong></p>
+      <div class="actions">
+        <button id="downloadPolicy" class="btn">Download PDF</button>
+        <!-- <button id="acceptPolicy" class="btn btn-ghost">Accept & Close</button> -->
+      </div>
+    </header>
+
+    <div class="intro" data-animate>
+      <p>
+        At <strong>InvoiceMan</strong>, we respect your privacy. This Privacy Policy explains what information we collect,
+        how we use it, and your choices. Our tool is designed for freelancers and runs primarily in your browser. we
+        try to keep your data private and simple.
+      </p>
+    </div>
+
+    <div class="accordion" id="policyAccordion">
+      <article class="card" data-animate>
+        <h3 class="card-title">1. Information We Collect</h3>
+        <div class="card-body">
+          <p><strong>Data you provide:</strong> When you type invoice info (your name, client details, items, notes), that data stays in your browser unless you explicitly export it or use a feature that requires saving to a server (we'll always ask first).</p>
+          <p><strong>Automatically collected:</strong> Analytics data (if enabled) such as page views, device type, and performance metrics. No personal invoice content is collected for analytics by default.</p>
+        </div>
+      </article>
+
+      <article class="card" data-animate>
+        <h3 class="card-title">2. How We Use Data</h3>
+        <div class="card-body">
+          <p>We use minimal data to:</p>
+          <ul>
+            <li>Help deliver the front-end experience (show preview, export PDF).</li>
+            <li>Improve the product via non-identifying analytics (if enabled).</li>
+            <li>Process payments and subscriptions if you opt for Pro features (via third-party payment processors).</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card" data-animate>
+        <h3 class="card-title">3. Cookies & Local Storage</h3>
+        <div class="card-body">
+          <p>We use browser localStorage to store temporary invoice data and preferences. Small cookies (or equivalent) may be used for session or analytics if you opt in. You can clear this data anytime from your browser settings.</p>
+        </div>
+      </article>
+
+
+     
+
+  <!-- Cookie consent banner -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite">
+    <p>We use localStorage and minimal cookies for preferences and (optional) analytics. By continuing to use InvoiceMan you accept this. <button id="acceptCookies" class="mini-btn">Accept</button></p>
+  </div>
+</section>
+
+<!-- Styles -->
+<style>
+  :root{
+    --bg:#f8fafc; --card:#ffffff; --muted:#6b7280; --accent:#2563eb; --glass:rgba(37,99,235,0.06);
+  }
+  .privacy-section{background:var(--bg); padding:48px 20px; font-family:Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, 'Poppins', sans-serif; color:#0f172a;}
+  .privacy-section .wrap{max-width:980px; margin:0 auto;}
+  .privacy-header{display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:18px;}
+  .privacy-header h1{font-size:1.75rem; color:var(--accent); margin-bottom:4px;}
+  .privacy-header .lead{color:var(--muted); margin-bottom:0;}
+  .privacy-header .actions{display:flex; gap:10px;}
+  .btn{background:var(--accent); color:white; padding:8px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:600;}
+  .btn-ghost{background:transparent; border:1px solid #e6eefb; color:var(--accent); padding:8px 12px; border-radius:8px;}
+  .intro{background:var(--card); padding:18px; border-radius:10px; box-shadow:0 6px 18px rgba(15,23,42,0.04); margin-bottom:18px;}
+  .accordion{display:grid; gap:12px;}
+  .card{background:linear-gradient(180deg, var(--card), #fbfdff); padding:14px; border-radius:10px; box-shadow:0 6px 18px rgba(2,6,23,0.04); overflow:hidden; border:1px solid rgba(2,6,23,0.03);}
+  .card-title{font-size:1.05rem; font-weight:700; color:#0f172a; margin:0; display:flex; justify-content:space-between; align-items:center; cursor:pointer;}
+  .card-body{max-height:0; overflow:hidden; transition:max-height 360ms ease; color:var(--muted); margin-top:8px;}
+  .card.open .card-body{max-height:1000px; padding-top:8px;}
+  .card-body p, .card-body ul{margin:8px 0; line-height:1.5;}
+  .card-body ul{padding-left:18px;}
+  .cookie-banner{position:fixed; left:16px; right:16px; bottom:16px; background:var(--card); padding:14px 16px; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.08); display:flex; justify-content:space-between; align-items:center; gap:12px; transition:transform .4s ease, opacity .4s ease; z-index:999;}
+  .cookie-banner.hidden{transform:translateY(140%); opacity:0; pointer-events:none;}
+  .mini-btn{background:var(--accent); color:white; padding:6px 10px; border-radius:8px; border:none; cursor:pointer; font-weight:600;}
+  .actions .btn, .actions .btn-ghost{transform:translateY(0); transition:transform .18s ease;}
+  .actions .btn:hover{transform:translateY(-3px);}
+  /* entrance animation */
+  [data-animate]{opacity:0; transform:translateY(18px); transition:all .7s cubic-bezier(.2,.9,.3,1);}
+  [data-animate].active{opacity:1; transform:none;}
+  /* responsive */
+  @media (max-width:880px){
+    .privacy-header{flex-direction:column; align-items:flex-start;}
+    .privacy-header .actions{width:100%; justify-content:flex-start;}
+    .privacy-header .actions .btn{width:156px;}
+  }
+</style>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+  // Animate on scroll (simple observer)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('active');
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+  // Accordion behavior
+  document.querySelectorAll('.card-title').forEach(title => {
+    title.addEventListener('click', () => {
+      const card = title.parentElement;
+      card.classList.toggle('open');
+    });
+    // add an affordance icon
+    const icon = document.createElement('span');
+    icon.textContent = '▾';
+    icon.style.opacity = '.6';
+    icon.style.marginLeft = '12px';
+    title.appendChild(icon);
+  });
+
+  // Cookie consent banner logic
+  const cookieBanner = document.getElementById('cookieBanner');
+  const acceptCookies = document.getElementById('acceptCookies');
+  const accepted = localStorage.getItem('invoiceman_cookies_accepted');
+  if (accepted) cookieBanner.classList.add('hidden');
+  acceptCookies.addEventListener('click', () => {
+    localStorage.setItem('invoiceman_cookies_accepted', '1');
+    cookieBanner.classList.add('hidden');
+  });
+
+  // Accept policy button (quick close)
+  document.getElementById('acceptPolicy').addEventListener('click', () => {
+    localStorage.setItem('invoiceman_policy_accepted', '1');
+    // hide cookie banner too
+    if (cookieBanner) cookieBanner.classList.add('hidden');
+    // give a quick feedback animation
+    document.querySelector('.privacy-header').style.transform = 'translateY(-6px)';
+    setTimeout(()=>document.querySelector('.privacy-header').style.transform = '', 300);
+  });
+
+  // Download policy as PDF
+  document.getElementById('downloadPolicy').addEventListener('click', () => {
+    const element = document.querySelector('#privacy .wrap');
+    const opt = {
+      margin:       0.4,
+      filename:     'InvoiceMan_Privacy_Policy.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true },
+      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().from(element).set(opt).save();
+  });
+
+  // set last-updated date programmatically (optional)
+  document.getElementById('pp-date').textContent = new Date().toLocaleDateString('en-GB', {year:'numeric', month:'short', day:'numeric'});
+</script>

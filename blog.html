@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="InvoiceMan Blog – Freelance invoicing tips, guides, and resources to help freelancers get paid faster.">
+  <title>InvoiceMan Blog - Freelance Invoicing Tips</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="InvoiceMan Blog">
+  <meta property="og:description" content="Learn how to create better invoices and get paid faster as a freelancer.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.com/blog">
+  <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; margin: 0; background: #fafafa; color: #333; }
+    header { padding: 1rem 2rem; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+    header h1 { margin: 0; font-size: 1.6rem; color: #2c4ae1; }
+
+    .blog-container { max-width: 1100px; margin: 2rem auto; padding: 1rem; }
+    .section-title { font-size: 1.8rem; margin-bottom: 1.2rem; color: #111; }
+
+    /* Cards */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .blog-card, .curated-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .blog-card:hover, .curated-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+
+    .blog-card h2, .curated-card h2 { font-size: 1.2rem; margin: 0 0 .5rem; color: #0070f3; }
+    .blog-card p, .curated-card p { font-size: .95rem; color: #555; }
+
+    .read-more { display: inline-block; margin-top: .75rem; color: #0070f3; text-decoration: none; font-weight: 500; }
+    .read-more:hover { text-decoration: underline; }
+
+    /* Animations */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all .6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>InvoiceMan Blog</h1>
+  </header>
+
+  <div class="blog-container">
+
+    <!-- Your Articles -->
+    <section>
+      <h2 class="section-title">📘 Our Articles</h2>
+      <div class="card-grid">
+        <article class="blog-card fade-in">
+          <h2><a href="post1.html">5 Must-Have Elements in a Freelance Invoice</a></h2>
+          <p>Learn the key things every freelancer should include in their invoices to look professional and get paid on time.</p>
+          <a class="read-more" href="post1.html">Read More →</a>
+        </article>
+
+        <article class="blog-card fade-in">
+          <h2><a href="post2.html">How to Avoid Late Payments as a Freelancer</a></h2>
+          <p>Struggling with late payments? Here are proven tips to make sure clients pay you faster.</p>
+          <a class="read-more" href="post2.html">Read More →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Curated Articles -->
+    <section style="margin-top:3rem;">
+      <h2 class="section-title">🌍 Recommended Reads</h2>
+      <div class="card-grid">
+        <article class="curated-card fade-in">
+          <h2><a href="8 favorite invoice & billing software solutions for small businesses" target="_blank">8 invoice & billing software solutions for small businesses</a></h2>
+          <p>A solid external guide on invoicing strategies for freelancers. Our quick summary: focus on clarity and deadlines.</p>
+          <a class="read-more" href="https://blog.hubspot.com/sales/best-invoice-software" target="_blank">Read HubSpot Original →</a>
+        </article>
+
+        <article class="curated-card fade-in">
+          <h2><a href="https://www.hubspot.com/resources/templates" target="_blank">Freelance Invoice Templates That Work</a></h2>
+          <p>FreshBooks explains how templates can make invoicing painless. We agree tools save time and make you look pro.</p>
+          <a class="read-more" href="https://www.hubspot.com/resources/templates" target="_blank">Read HubSpot Original →</a>
+        </article>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Intersection Observer for fade-in animations
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = { threshold: 0.1, rootMargin: "0px 0px -20px 0px" };
+
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => { appearOnScroll.observe(fader); });
+  </script>
+
+</body>
+</html>

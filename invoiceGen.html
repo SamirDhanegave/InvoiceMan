@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Create free invoices in seconds. No signup required. Designed for freelancers.">
+  <meta name="keywords" content="invoice generator, freelancer invoice, free invoice template">
+  <title>Invoice Generator</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    body {display: flex; height: 100vh; background: #f9fafc; color: #333; overflow: hidden;}
+    .container {display: flex; width: 100%;}
+    .form-panel {width: 35%; background: #fff; padding: 20px; overflow-y: auto; box-shadow: 2px 0 10px rgba(0,0,0,0.1); animation: slideIn 0.6s ease;}
+    .form-panel h2 {margin-bottom: 15px; color: #222;}
+    .form-group {margin-bottom: 15px;}
+    label {display: block; margin-bottom: 5px; font-weight: 600;}
+    input, textarea {width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;}
+    textarea {resize: none;}
+    table {width: 100%; border-collapse: collapse; margin-top: 10px;}
+    th, td {border: 1px solid #ddd; padding: 6px; text-align: left;}
+    th {background: #f1f1f1;}
+    .add-item {margin-top: 10px; background: #2563eb; color: #fff; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s;}
+    .add-item:hover {background: #1e4bb5;}
+    .btns {margin-top: 20px; display: flex; gap: 10px;}
+    .btns button {flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s;}
+    .download {background: #16a34a; color: #fff;}
+    .download:hover {background: #0f6d31;}
+    .upgrade {background: #facc15;}
+    .upgrade:hover {background: #eab308;}
+
+    .preview-panel {flex: 1; padding: 20px; overflow-y: auto; animation: fadeIn 1s ease;}
+    .invoice-box {background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.05); position: relative;}
+    .invoice-header {display: flex; justify-content: space-between; margin-bottom: 20px;}
+    .invoice-title {font-size: 24px; font-weight: 700; color: #2563eb;}
+    .section {margin-bottom: 15px;}
+    .section h3 {font-size: 16px; margin-bottom: 5px; color: #444;}
+    .totals {margin-top: 15px; text-align: right;}
+    .totals p {margin: 4px 0;}
+
+    @keyframes slideIn {from {transform: translateX(-100%);} to {transform: translateX(0);}}
+    @keyframes fadeIn {from {opacity: 0;} to {opacity: 1;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Form Panel -->
+    <div class="form-panel">
+      <h2>Your Info</h2>
+      <div class="form-group"><label>Name</label><input id="yourName"></div>
+      <div class="form-group"><label>Business Name</label><input id="businessName"></div>
+      <div class="form-group"><label>Address</label><input id="yourAddress"></div>
+      <div class="form-group"><label>Email</label><input id="yourEmail"></div>
+
+      <h2>Client Info</h2>
+      <div class="form-group"><label>Name</label><input id="clientName"></div>
+      <div class="form-group"><label>Address</label><input id="clientAddress"></div>
+      <div class="form-group"><label>Email</label><input id="clientEmail"></div>
+
+      <h2>Invoice Details</h2>
+      <div class="form-group"><label>Invoice #</label><input id="invoiceNumber"></div>
+      <div class="form-group"><label>Date</label><input type="date" id="invoiceDate"></div>
+      <div class="form-group"><label>Due Date</label><input type="date" id="dueDate"></div>
+
+      <h2>Items</h2>
+      <table id="itemsTable">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Rate</th>
+            <th>Tax %</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button class="add-item" onclick="addItem()">+ Add Item</button>
+
+      <h2>Notes</h2>
+      <div class="form-group"><textarea id="notes" rows="3"></textarea></div>
+
+      <div class="btns">
+        <button class="download" id="downloadPdf">Download PDF</button>
+
+      </div>
+    </div>
+
+    <!-- Preview Panel -->
+    <div class="preview-panel">
+      <div class="invoice-box" id="invoicePreview">
+        <div class="invoice-header">
+          <div>
+            <div class="invoice-title">INVOICE</div>
+            <p id="previewInvoiceNumber"></p>
+            <p>Date: <span id="previewInvoiceDate"></span></p>
+            <p>Due: <span id="previewDueDate"></span></p>
+          </div>
+          <div>
+            <h3>From:</h3>
+            <p id="previewYourName"></p>
+            <p id="previewBusinessName"></p>
+            <p id="previewYourAddress"></p>
+            <p id="previewYourEmail"></p>
+          </div>
+        </div>
+        <div class="section">
+          <h3>Bill To:</h3>
+          <p id="previewClientName"></p>
+          <p id="previewClientAddress"></p>
+          <p id="previewClientEmail"></p>
+        </div>
+        <table style="width:100%; margin-top:10px;">
+          <thead>
+            <tr><th>Item</th><th>Qty</th><th>Rate</th><th>Tax</th><th>Total</th></tr>
+          </thead>
+          <tbody id="previewItems"></tbody>
+        </table>
+        <div class="totals">
+          <p>Subtotal: $<span id="subtotal">0.00</span></p>
+          <p>Tax: $<span id="taxTotal">0.00</span></p>
+          <h3>Total: $<span id="grandTotal">0.00</span></h3>
+        </div>
+        <div class="section">
+          <h3>Notes:</h3>
+          <p id="previewNotes"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+    const itemsTable = document.getElementById("itemsTable").querySelector("tbody");
+    function addItem() {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><input type="text" class="item-name"></td>
+        <td><input type="number" class="item-qty" value="1"></td>
+        <td><input type="number" class="item-rate" value="0"></td>
+        <td><input type="number" class="item-tax" value="0"></td>
+      `;
+      itemsTable.appendChild(row);
+      updatePreview();
+      row.querySelectorAll("input").forEach(input => input.addEventListener("input", updatePreview));
+    }
+
+    document.querySelectorAll("input, textarea").forEach(input => {
+      input.addEventListener("input", updatePreview);
+    });
+
+    function updatePreview() {
+      document.getElementById("previewYourName").innerText = document.getElementById("yourName").value;
+      document.getElementById("previewBusinessName").innerText = document.getElementById("businessName").value;
+      document.getElementById("previewYourAddress").innerText = document.getElementById("yourAddress").value;
+      document.getElementById("previewYourEmail").innerText = document.getElementById("yourEmail").value;
+
+      document.getElementById("previewClientName").innerText = document.getElementById("clientName").value;
+      document.getElementById("previewClientAddress").innerText = document.getElementById("clientAddress").value;
+      document.getElementById("previewClientEmail").innerText = document.getElementById("clientEmail").value;
+
+      document.getElementById("previewInvoiceNumber").innerText = "Invoice #" + document.getElementById("invoiceNumber").value;
+      document.getElementById("previewInvoiceDate").innerText = document.getElementById("invoiceDate").value;
+      document.getElementById("previewDueDate").innerText = document.getElementById("dueDate").value;
+
+      document.getElementById("previewNotes").innerText = document.getElementById("notes").value;
+
+      const previewItems = document.getElementById("previewItems");
+      previewItems.innerHTML = "";
+      let subtotal = 0, taxTotal = 0;
+      itemsTable.querySelectorAll("tr").forEach(row => {
+        const name = row.querySelector(".item-name").value;
+        const qty = parseFloat(row.querySelector(".item-qty").value) || 0;
+        const rate = parseFloat(row.querySelector(".item-rate").value) || 0;
+        const tax = parseFloat(row.querySelector(".item-tax").value) || 0;
+        const lineTotal = qty * rate;
+        const taxAmount = lineTotal * (tax / 100);
+        subtotal += lineTotal;
+        taxTotal += taxAmount;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${name}</td><td>${qty}</td><td>$${rate.toFixed(2)}</td><td>${tax}%</td><td>$${(lineTotal+taxAmount).toFixed(2)}</td>`;
+        previewItems.appendChild(tr);
+      });
+      document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+      document.getElementById("taxTotal").innerText = taxTotal.toFixed(2);
+      document.getElementById("grandTotal").innerText = (subtotal+taxTotal).toFixed(2);
+    }
+
+    // Download PDF with watermark
+    document.getElementById("downloadPdf").addEventListener("click", () => {
+      const element = document.getElementById("invoicePreview");
+      const watermark = document.createElement("div");
+      // watermark.innerText = "Generated by InvoiceGen (Free)";
+      watermark.style.position = "absolute";
+      watermark.style.bottom = "20px";
+      watermark.style.right = "20px";
+      watermark.style.opacity = "0.3";
+      watermark.style.fontSize = "14px";
+      watermark.style.color = "#555";
+      element.appendChild(watermark);
+
+      const opt = { margin:0.5, filename:'invoice.pdf', image:{type:'jpeg',quality:0.98}, html2canvas:{scale:2}, jsPDF:{unit:'in', format:'a4', orientation:'portrait'} };
+
+      html2pdf().from(element).set(opt).save().then(()=>element.removeChild(watermark));
+    });
+
+    // Pro version (no watermark)
+    document.getElementById("upgradePro").addEventListener("click", () => {
+      const element = document.getElementById("invoicePreview");
+      const opt = { margin:0.5, filename:'invoice-pro.pdf', image:{type:'jpeg',quality:0.98}, html2canvas:{scale:2}, jsPDF:{unit:'in', format:'a4', orientation:'portrait'} };
+      html2pdf().from(element).set(opt).save();
+    });
+
+    // Initialize with 1 item row
+    addItem();
+  </script>
+</body>
+</html>
